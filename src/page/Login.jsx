@@ -7,6 +7,7 @@ import { ToastContainer, toast } from "react-toastify";
 import ToastNotify from "../Components/ToastNotify";
 import { styleError, styleSuccess } from "../Components/ToastNotifyStyle";
 import "react-toastify/dist/ReactToastify.css";
+import LoginApp from "../utils/LoginApp";
 
 const Login = () => {
   const [username, setUsername] = useState("");
@@ -18,20 +19,19 @@ const Login = () => {
 
   const handleLogin = async () => {
     try {
-      const dataLogin = await GetALLDmdv(taxCode);
+      const dataLogin = await LoginApp(taxCode, username, password);
+      console.log("🚀 ~ handleLogin ~ dataLogin:", dataLogin);
 
-      if (
-        dataLogin?.data &&
-        Array.isArray(dataLogin.data) &&
-        dataLogin.data.length > 0
-      ) {
-        localStorage.setItem("login", taxCode);
-        localStorage.setItem("comapyname", dataLogin.data[0].ten_dvcs);
+      if (dataLogin?.token) {
+        const companyInfo = await GetALLDmdv(taxCode);
+        console.log("🚀 ~ handleLogin ~ companyInfo:", companyInfo);
+        localStorage.setItem("taxCode", taxCode);
+        localStorage.setItem("companyName", companyInfo.data[0].ten_dvcs);
         toast.success(
           <ToastNotify status={0} message={"Đăng nhập thành công"} />,
           { style: styleSuccess }
         );
-        navigate("/customers");
+        navigate("/upload-cks");
       } else {
         const errorMessage = dataLogin?.data?.message || "Đăng nhập thất bại";
         toast.error(<ToastNotify status={-1} message={errorMessage} />, {
@@ -52,9 +52,9 @@ const Login = () => {
   };
 
   useEffect(() => {
-    const taxCode = localStorage.getItem("login");
+    const taxCode = localStorage.getItem("taxCode");
     if (taxCode) {
-      navigate("/customers");
+      navigate("/upload-cks");
     }
   }, [taxCode]);
 
@@ -98,10 +98,10 @@ const Login = () => {
               Mã số thuế
             </label>
             <input
-              id="username"
+              id="taxcode"
               className="input-login mb-3"
               type="text"
-              name="uname"
+              name="taxcode"
               onChange={(e) => setTaxCode(e.target.value)}
             />
             <label className="block mb-2 fz-15 " htmlFor="uname">

@@ -11,6 +11,7 @@ import NavBar from "./Components/NavBar";
 import Dashboard from "./page/Dashboard";
 import Breadcrumbs from "./Components/Breadcrumbs";
 import Customer from "./page/ManageCustomer/Customer";
+import UploadCKS from "./page/upload-cks";
 
 const Layout = () => {
   return (
@@ -30,9 +31,13 @@ const router = createBrowserRouter([
     path: "/",
     element: <Layout />,
     children: [
+      // {
+      //   path: "/customers",
+      //   element: <Customer />,
+      // },
       {
-        path: "/customers",
-        element: <Customer />,
+        path: "/upload-cks",
+        element: <UploadCKS />,
       },
     ],
   },

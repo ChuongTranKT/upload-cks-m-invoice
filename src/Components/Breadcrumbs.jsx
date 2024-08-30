@@ -22,8 +22,8 @@ const Breadcrumbs = () => {
   const [taxCode, setTaxcode] = useState("");
   const [ten_dvcs, setTendvcs] = useState("");
   useEffect(() => {
-    const taxCode = localStorage.getItem("login");
-    const ten_dvcs = localStorage.getItem("comapyname");
+    const taxCode = localStorage.getItem("taxCode");
+    const ten_dvcs = localStorage.getItem("companyName");
 
     if (taxCode) {
       setTaxcode(taxCode);

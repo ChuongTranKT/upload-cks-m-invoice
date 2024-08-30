@@ -1,11 +1,10 @@
-import React from "react";
-
-async function GetDmkh(taxCode, start) {
+async function GetListCks(taxCode) {
+  console.log("🚀 ~ GetListCks ~ taxCode:", taxCode);
   let sanitizedTaxCode = taxCode.replace(/-/g, "");
   const url = `https://${sanitizedTaxCode}.minvoice.com.vn/api/System/GetDataByWindowNo1`;
   const body = {
-    window_id: "WIN00009",
-    start: start,
+    window_id: "WIN00010",
+    start: 0,
     count: 300,
   };
 
@@ -32,4 +31,4 @@ async function GetDmkh(taxCode, start) {
   }
 }
 
-export default GetDmkh;
+export default GetListCks;

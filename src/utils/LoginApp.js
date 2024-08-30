@@ -10,7 +10,7 @@ async function LoginApp(taxCode, username, password) {
   const body = qs.stringify({
     username: username,
     password: password,
-    ma_dvcs: "VP",
+    ma_dvcs: taxCode,
   });
 
   try {
