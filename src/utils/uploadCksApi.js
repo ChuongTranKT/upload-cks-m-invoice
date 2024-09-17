@@ -1,14 +1,12 @@
-async function UploadCksAPI(dataCks, cookie) {
-  const url = "https://hddt.minvoice.com.vn/api/api/app/token";
-
+async function UploadCksAPI(dataUpload) {
+  const url = `${process.env.REACT_APP_API_URL}/upload-digital-signature`;
   try {
     const response = await fetch(url, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
-        Cookie: cookie,
       },
-      body: JSON.stringify(dataCks),
+      body: JSON.stringify(dataUpload),
     });
 
     if (!response.ok) {
@@ -16,6 +14,7 @@ async function UploadCksAPI(dataCks, cookie) {
     }
 
     const data = await response.json();
+    console.log("🚀 ~ UploadCksAPI ~ data:", data);
     return data; // Trả về dữ liệu để xử lý lỗi
   } catch (error) {
     console.error("Error:", error);

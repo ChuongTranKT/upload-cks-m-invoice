@@ -43,9 +43,15 @@ const UploadCKS = () => {
 
     if (taxCode) {
       setTaxCode(taxCode);
+
+      const getListCks = async () => {
+        await handleGetListCks(taxCode);
+      };
+
+      getListCks();
     }
   }, []);
-  const handleGetListCks = async () => {
+  const handleGetListCks = async (taxCode) => {
     setIsloading(true);
 
     const listCksResponse = await GetListCks(taxCode);
@@ -93,10 +99,20 @@ const UploadCKS = () => {
           {row.index + 1}
         </span>
       ),
+      size: 100,
+    },
+    {
+      accessorKey: "issuer",
+      header: "Tên đơn vị cấp",
+      Cell: ({ row }) => (
+        <span className={row.original.issuer === getIDRow ? "active" : ""}>
+          {row.original.issuer}
+        </span>
+      ),
     },
     {
       accessorKey: "subjectname",
-      header: "Chủ thể",
+      header: "Tên chủ sỡ hữu",
       Cell: ({ row }) => (
         <span className={row.original.subjectname === getIDRow ? "active" : ""}>
           {row.original.subjectname}
@@ -105,7 +121,7 @@ const UploadCKS = () => {
     },
     {
       accessorKey: "so_serial",
-      header: "Ký hiệu",
+      header: "Serial",
       Cell: ({ row }) => (
         <span className={row.original.so_serial === getIDRow ? "active" : ""}>
           {row.original.so_serial}
@@ -115,20 +131,41 @@ const UploadCKS = () => {
     {
       accessorKey: "ngaybatdau",
       header: "Ngày bắt đầu",
-      Cell: ({ row }) => (
-        <span className={row.original.ngaybatdau === getIDRow ? "active" : ""}>
-          {row.original.ngaybatdau}
-        </span>
-      ),
+      Cell: ({ row }) => {
+        const date = new Date(row.original.ngaybatdau);
+        const formattedDate = date.toLocaleDateString("vi-VN", {
+          year: "numeric",
+          month: "2-digit",
+          day: "2-digit",
+        });
+
+        return (
+          <span
+            className={row.original.ngaybatdau === getIDRow ? "active" : ""}
+          >
+            {formattedDate}
+          </span>
+        );
+      },
     },
     {
       accessorKey: "ngayketthuc",
       header: "Ngày kết thúc",
-      Cell: ({ row }) => (
-        <span className={row.original.ngayketthuc === getIDRow ? "active" : ""}>
-          {row.original.ngayketthuc}
-        </span>
-      ),
+      Cell: ({ row }) => {
+        const date = new Date(row.original.ngayketthuc);
+        const formattedDate = date.toLocaleDateString("vi-VN", {
+          year: "numeric",
+          month: "2-digit",
+          day: "2-digit",
+        });
+        return (
+          <span
+            className={row.original.ngayketthuc === getIDRow ? "active" : ""}
+          >
+            {formattedDate}
+          </span>
+        );
+      },
     },
 
     // {
@@ -157,7 +194,7 @@ const UploadCKS = () => {
 
   const handleUploadCks = async () => {
     let isUploadCks = false;
-    const dataUploadCks = listCks.map(async (item) => {
+    const dataUploadCks = listCks.map((item) => {
       const cksInfo = {
         vender: item.issuer,
         subjectName: item.subjectname,
@@ -168,17 +205,23 @@ const UploadCKS = () => {
         tokenType: 0,
         used: true,
       };
-
-      const response = await UploadCksAPI(cksInfo, cookie);
-      if (response.error) {
-        isUploadCks = false;
-      } else {
-        return true;
-      }
       return cksInfo;
     });
-    const results = await Promise.all(dataUploadCks);
-    isUploadCks = results.some((result) => result === true);
+    console.log("🚀 ~ dataUploadCks ~ dataUploadCks:", dataUploadCks);
+    const dataUpload = {
+      cookie: cookie,
+      digital_signature: dataUploadCks,
+    };
+    try {
+      const response = await UploadCksAPI(dataUpload);
+      if (response.status === "upload success") {
+        isUploadCks = true;
+      } else {
+        isUploadCks = false;
+      }
+    } catch (error) {
+      isUploadCks = false;
+    }
 
     if (isUploadCks) {
       toast.success(
@@ -284,7 +327,7 @@ const UploadCKS = () => {
               data={listCks}
               renderTopToolbarCustomActions={() => (
                 <Box className="col">
-                  <Button
+                  {/* <Button
                     className="btn_add"
                     style={{}}
                     onClick={handleGetListCks}
@@ -296,7 +339,7 @@ const UploadCKS = () => {
                     <span style={{ paddingLeft: "5px" }}>
                       Lấy danh sách CKS
                     </span>
-                  </Button>
+                  </Button> */}
                   {/* <Button className="btn_edit">
                     <span
                       style={{ paddingRight: "5px" }}
