@@ -31,8 +31,8 @@ const NavBar = () => {
 
       {/* navbar list */}
       <div style={{ flex: 6, display: "flex", justifyContent: "center" }}>
-        <ul className="ul-list-nav">
-          {/* <li
+        {/* <ul className="ul-list-nav">  */}
+        {/* <li
             className={getLocation.pathname === "/invoices" ? "active" : ""}
             role="none"
             style={{ alignItems: "center" }}
@@ -46,7 +46,7 @@ const NavBar = () => {
             </Link>
           </li> */}
 
-          <li
+        {/* <li
             role="none"
             style={{ alignItems: "center" }}
             className={getLocation.pathname === "/customers" ? "active" : ""}
@@ -58,8 +58,8 @@ const NavBar = () => {
               ></span>
               <span>Upload chữ kí số</span>
             </Link>
-          </li>
-          {/* <li
+          </li> */}
+        {/* <li
             role="none"
             style={{ alignItems: "center" }}
             className={getLocation.pathname === "/services" ? "active" : ""}
@@ -72,7 +72,7 @@ const NavBar = () => {
               <span>Quản lý dịch vụ</span>
             </Link>
           </li> */}
-          {/* <li
+        {/* <li
             role="none"
             style={{ alignItems: "center" }}
             className={getLocation.pathname === "/branchreport" ? "active" : ""}
@@ -85,7 +85,7 @@ const NavBar = () => {
               <span>Báo cáo chi nhánh</span>
             </Link>
           </li> */}
-          {/* <li
+        {/* <li
             role="none"
             style={{ alignItems: "center" }}
             className={getLocation.pathname === "/systemreport" ? "active" : ""}
@@ -98,7 +98,7 @@ const NavBar = () => {
               <span>Báo cáo hệ thống</span>
             </Link>
           </li> */}
-          {/* <li role="none" style={{ alignItems: "center" }}>
+        {/* <li role="none" style={{ alignItems: "center" }}>
             <Link
               className="link"
               to="/customers"
@@ -115,12 +115,12 @@ const NavBar = () => {
               ></i>
             </Link>
           </li> */}
-        </ul>
+        {/* </ul> */}
       </div>
       <div
         style={{
           display: "flex",
-          justifyContent: "center",
+          justifyContent: "end",
           alignItems: "center",
         }}
       >

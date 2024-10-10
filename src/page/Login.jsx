@@ -89,7 +89,7 @@ const Login = () => {
                 marginBottom: "30px",
               }}
             >
-              Quản lý User Tra Cứu
+              Upload CKS
             </p>
           </div>
 

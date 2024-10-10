@@ -207,7 +207,6 @@ const UploadCKS = () => {
       };
       return cksInfo;
     });
-    console.log("🚀 ~ dataUploadCks ~ dataUploadCks:", dataUploadCks);
     const dataUpload = {
       cookie: cookie,
       digital_signature: dataUploadCks,
@@ -215,11 +214,14 @@ const UploadCKS = () => {
     try {
       const response = await UploadCksAPI(dataUpload);
       if (response.status === "upload success") {
+        setIsOpen(false);
         isUploadCks = true;
       } else {
+        setIsOpen(false);
         isUploadCks = false;
       }
     } catch (error) {
+      setIsOpen(false);
       isUploadCks = false;
     }
 
